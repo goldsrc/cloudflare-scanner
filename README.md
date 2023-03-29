@@ -1,28 +1,50 @@
-# Create T3 App
+# Cloudflare Clean ip scanner
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Acknowledgements
 
-## What's next? How do I make an app with this?
+This project is based on the work of [vfarid](https://github.com/vfarid/cf-ip-scanner)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Usage
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+You can find the latest deployment here: [https://cloudflare-scanner.vercel.app/](https://cloudflare-scanner.vercel.app/)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Development
 
-## Learn More
+### Requirements
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- Node.js 18+
+- Yarn 1.22+
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Installation of dependencies
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+```bash
+yarn install
+```
 
-## How do I deploy this?
+### Running the app in development mode
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+yarn dev
+```
+
+### Building the app for production
+
+```bash
+yarn build
+```
+
+### Running the app in production mode
+
+```bash
+yarn start
+```
+
+## License
+
+[MIT](LICENSE)
+
+## Author
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/mamadbeheshti?style=social)](https://twitter.com/mamadbeheshti)
+
+[![GitHub Follow](https://img.shields.io/github/followers/goldsrc?style=social)](https://github.com/goldsrc)
