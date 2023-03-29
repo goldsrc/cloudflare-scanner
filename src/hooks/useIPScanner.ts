@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { allIps } from "~/consts";
 import { randomizeElements } from "~/helpers/randomizeElements";
 import pick from "lodash/pick";
 
@@ -109,7 +108,11 @@ export const useScannerStore = create<ScannerStore>()(
   )
 );
 
-export const useIPScanner = () => {
+type IPScannerProps = {
+  allIps: string[];
+};
+
+export const useIPScanner = ({ allIps }: IPScannerProps) => {
   const {
     dispatch,
     reset,

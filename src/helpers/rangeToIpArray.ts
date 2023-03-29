@@ -1,7 +1,7 @@
 export function rangeToIpArray(range: string) {
   const parts = range.split("/");
   if (parts.length !== 2) {
-    throw new Error("Invalid IP Range");
+    throw new Error(`Invalid IP Range format ${range} `);
   }
   const [ip, maskString] = parts as [string, string];
   const mask = parseInt(maskString, 10);
