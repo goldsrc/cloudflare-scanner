@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "download": "node ./src/download.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.16",
