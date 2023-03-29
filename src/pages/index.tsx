@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { type NextPage } from "next";
+import { type InferGetStaticPropsType, type NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { type TryChar, useIPScanner } from "~/hooks/useIPScanner";
 import { download } from "~/helpers/download";
 import {
@@ -11,9 +12,25 @@ import {
   PlayIcon,
   StopIcon,
 } from "@heroicons/react/24/solid";
-import { copyIPToClipboard } from "~/helpers/copyIPToClipboard";
 
-const Home: NextPage = () => {
+import { copyIPToClipboard } from "~/helpers/copyIPToClipboard";
+import { rangeToIpArray } from "~/helpers/rangeToIpArray";
+import cloudflareIpRanges from "~/consts/ip-ranges.json";
+export function getStaticProps() {
+  const allIps: string[] = cloudflareIpRanges.flatMap((range) =>
+    rangeToIpArray(range)
+  );
+
+  return {
+    props: {
+      allIps,
+    },
+  };
+}
+
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  allIps,
+}) => {
   const {
     startScan,
     stopScan,
@@ -28,7 +45,7 @@ const Home: NextPage = () => {
     tryChar,
     validIPs,
     setSettings,
-  } = useIPScanner();
+  } = useIPScanner({ allIps });
 
   const isRunning = scanState !== "idle";
 
@@ -51,7 +68,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex h-full max-w-full flex-col items-center justify-center bg-gradient-to-b from-cyan-300 to-cyan-400 px-3">
-        <div className="max-h-full w-[900px] max-w-full rounded-lg bg-slate-200 p-5 text-gray-700 shadow-2xl">
+        <div className="max-h-full w-[900px] max-w-full rounded-lg bg-slate-200 p-5 text-gray-700 shadow-lg">
           <section className="flex flex-col items-center border-b-4 border-cyan-600">
             <div className="w-full border-b-4 border-cyan-600 py-4 text-center">
               <h1 className="text-3xl font-bold text-cyan-900">
@@ -188,6 +205,23 @@ const Home: NextPage = () => {
             </table>
           </section>
         </div>
+        <footer className="flex h-24 w-full items-center justify-center">
+          <a
+            className="flex items-center justify-center rounded bg-slate-100 p-3"
+            href="https://github.com/goldsrc/cloudflare-scanner"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Source on{" "}
+            <Image
+              src="/github.svg"
+              width={16}
+              height={16}
+              alt="Github Logo"
+              className="ml-2 h-4 w-4"
+            />
+          </a>
+        </footer>
       </main>
     </>
   );
