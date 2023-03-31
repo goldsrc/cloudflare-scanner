@@ -3,6 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { type TryChar, useIPScanner } from "~/hooks/useIPScanner";
+import { useIPInfo } from "~/hooks/useIPInfo";
 import { download } from "~/helpers/download";
 import {
   TableCellsIcon,
@@ -14,6 +15,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { copyIPToClipboard } from "~/helpers/copyIPToClipboard";
 import { allIps } from "~/consts";
+import UserIP from "~/components/UserIP";
 
 const Home: NextPage = () => {
   const {
@@ -31,6 +33,8 @@ const Home: NextPage = () => {
     validIPs,
     setSettings,
   } = useIPScanner({ allIps });
+
+  const { ipInfo } = useIPInfo();
 
   const isRunning = scanState !== "idle";
 
@@ -112,6 +116,14 @@ const Home: NextPage = () => {
                 />
               </label>
             </div>
+            <UserIP
+              ip={ipInfo?.IPv4 || ipInfo?.IPv6 || "0.0.0.0"}
+              location={
+                ipInfo.city.length > 0 && ipInfo.country_name.length > 0
+                  ? ipInfo.city + ", " + ipInfo.country_name
+                  : "Loading..."
+              }
+            />
             <div className="flex w-full flex-col items-center justify-around py-4 md:w-1/2 md:flex-row">
               {!isRunning ? (
                 <button
