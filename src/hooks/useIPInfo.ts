@@ -15,13 +15,13 @@ type IPInfo = {
 
 const useIPInfo = () => {
   const [ipInfo, setIPInfo] = useState<IPInfo>({
-    country_code: "...",
-    country_name: "...",
-    city: "...",
+    country_code: "",
+    country_name: "",
+    city: "",
     postal: 0,
     latitude: 0,
     longitude: 0,
-    state: "...",
+    state: "",
   });
 
   const getIPInfo = useCallback<() => Promise<AxiosResponse<IPInfo>>>(
