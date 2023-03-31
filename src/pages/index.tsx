@@ -12,25 +12,10 @@ import {
   PlayIcon,
   StopIcon,
 } from "@heroicons/react/24/solid";
-
 import { copyIPToClipboard } from "~/helpers/copyIPToClipboard";
-import { rangeToIpArray } from "~/helpers/rangeToIpArray";
-import cloudflareIpRanges from "~/consts/ip-ranges.json";
-export function getStaticProps() {
-  const allIps: string[] = cloudflareIpRanges.flatMap((range) =>
-    rangeToIpArray(range)
-  );
+import { allIps } from "~/consts";
 
-  return {
-    props: {
-      allIps,
-    },
-  };
-}
-
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  allIps,
-}) => {
+const Home: NextPage = () => {
   const {
     startScan,
     stopScan,
@@ -130,7 +115,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <div className="flex w-full flex-col items-center justify-around py-4 md:w-1/2 md:flex-row">
               {!isRunning ? (
                 <button
-                  className="rounded bg-cyan-500 py-2 px-4 font-bold text-white outline-cyan-700 transition-colors duration-300 hover:bg-cyan-600 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:outline-white disabled:hover:bg-gray-800"
+                  className="rounded bg-cyan-500 px-4 py-2 font-bold text-white outline-cyan-700 transition-colors duration-300 hover:bg-cyan-600 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:outline-white disabled:hover:bg-gray-800"
                   onClick={startScan}
                 >
                   Start Scan{" "}
@@ -138,7 +123,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 </button>
               ) : (
                 <button
-                  className="rounded bg-cyan-500 py-2 px-4 font-bold text-white outline-cyan-700 transition-colors duration-300 hover:bg-cyan-600 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:outline-white disabled:hover:bg-gray-800"
+                  className="rounded bg-cyan-500 px-4 py-2 font-bold text-white outline-cyan-700 transition-colors duration-300 hover:bg-cyan-600 disabled:cursor-not-allowed disabled:bg-gray-700 disabled:outline-white disabled:hover:bg-gray-800"
                   type="button"
                   onClick={stopScan}
                   disabled={scanState === "stopping"}
@@ -179,11 +164,11 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <table className="w-full">
               <thead className=" ">
                 <tr>
-                  <th className="sticky top-0 rounded-tl rounded-bl bg-cyan-300">
+                  <th className="sticky top-0 rounded-bl rounded-tl bg-cyan-300">
                     No #
                   </th>
                   <th className="sticky top-0 bg-cyan-300">IP</th>
-                  <th className="sticky top-0 rounded-tr rounded-br bg-cyan-300">
+                  <th className="sticky top-0 rounded-br rounded-tr bg-cyan-300">
                     Latency
                   </th>
                 </tr>
