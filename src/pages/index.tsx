@@ -165,12 +165,22 @@ const Home: NextPage = () => {
               <TableCellsIcon
                 onClick={() => download(validIPs, "csv")}
                 title="Download as CSV"
-                className="mx-2 h-6 w-6 cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500"
+                className={
+                  (validIPs.length > 0
+                    ? "cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500 "
+                    : "cursor-not-allowed text-gray-500 transition-colors duration-300 hover:text-gray-400 ") +
+                  "mx-2 h-6 w-6"
+                }
               />
               <DocumentTextIcon
                 onClick={() => download(validIPs, "json")}
                 title="Download as JSON"
-                className="mx-2 h-6 w-6 cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500"
+                className={
+                  (validIPs.length > 0
+                    ? "cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500 "
+                    : "cursor-not-allowed text-gray-500 transition-colors duration-300 hover:text-gray-400 ") +
+                  "mx-2 h-6 w-6"
+                }
               />
             </div>
           </section>
