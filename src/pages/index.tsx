@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { type InferGetStaticPropsType, type NextPage } from "next";
+import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { type TryChar, useIPScanner } from "~/hooks/useIPScanner";
@@ -152,10 +152,12 @@ const Home: NextPage = () => {
               <div className="mx-2 text-center">Latency: {currentLatency}</div>
               <TableCellsIcon
                 onClick={() => download(validIPs, "csv")}
+                title="Download as CSV"
                 className="mx-2 h-6 w-6 cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500"
               />
               <DocumentTextIcon
                 onClick={() => download(validIPs, "json")}
+                title="Download as JSON"
                 className="mx-2 h-6 w-6 cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500"
               />
             </div>
