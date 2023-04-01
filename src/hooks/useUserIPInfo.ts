@@ -3,7 +3,6 @@ import { fetchUserIPInfo } from "~/swr/fetchers/userIP";
 
 export const useUserIPInfo = () => {
   const swr = useSWR("ipInfo", () => fetchUserIPInfo(), {
-    revalidateOnFocus: false,
     fallbackData: {
       ipVersion: 0,
       ipAddress: "0.0.0.0",
