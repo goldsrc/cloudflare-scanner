@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { type InferGetStaticPropsType, type NextPage } from "next";
+import { type InferGetServerSidePropsType, type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { type TryChar, useIPScanner } from "~/hooks/useIPScanner";
@@ -14,8 +14,31 @@ import {
 } from "@heroicons/react/24/solid";
 import { copyIPToClipboard } from "~/helpers/copyIPToClipboard";
 import { allIps } from "~/consts";
+import type { GetServerSideProps } from "next";
+import requestIp from "request-ip";
+import { type IPInfo } from "~/types";
+import UserIP from "~/components/UserIP";
 
-const Home: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<{
+  ipInfo?: IPInfo;
+}> = async ({ req }) => {
+  const clientIp = requestIp.getClientIp(req);
+  if (!clientIp) {
+    return {
+      props: {},
+    };
+  }
+  const res = await fetch(`https://freeipapi.com/api/json/${clientIp}`);
+  const ipInfo = (await res.json()) as IPInfo;
+  return {
+    props: {
+      ipInfo,
+    },
+  };
+};
+const Home: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ ipInfo }) => {
   const {
     startScan,
     stopScan,
@@ -112,6 +135,16 @@ const Home: NextPage = () => {
                 />
               </label>
             </div>
+            {ipInfo && (
+              <UserIP
+                ip={ipInfo.ipAddress}
+                location={
+                  ipInfo.ipVersion !== 0
+                    ? ipInfo.regionName + ", " + ipInfo.countryName
+                    : "..."
+                }
+              />
+            )}
             <div className="flex w-full flex-col items-center justify-around py-4 md:w-1/2 md:flex-row">
               {!isRunning ? (
                 <button
@@ -152,15 +185,27 @@ const Home: NextPage = () => {
               <div className="mx-2 text-center">Latency: {currentLatency}</div>
               <TableCellsIcon
                 onClick={() => download(validIPs, "csv")}
-                className="mx-2 h-6 w-6 cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500"
+                title="Download as CSV"
+                className={
+                  (validIPs.length > 0
+                    ? "cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500 "
+                    : "cursor-not-allowed text-gray-500 transition-colors duration-300 hover:text-gray-400 ") +
+                  "mx-2 h-6 w-6"
+                }
               />
               <DocumentTextIcon
                 onClick={() => download(validIPs, "json")}
-                className="mx-2 h-6 w-6 cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500"
+                title="Download as JSON"
+                className={
+                  (validIPs.length > 0
+                    ? "cursor-pointer text-blue-600 transition-colors duration-300 hover:text-blue-500 "
+                    : "cursor-not-allowed text-gray-500 transition-colors duration-300 hover:text-gray-400 ") +
+                  "mx-2 h-6 w-6"
+                }
               />
             </div>
           </section>
-          <section className="h-40 max-h-40 overflow-scroll">
+          <section className="h-40 max-h-40 overflow-y-scroll">
             <table className="w-full">
               <thead className=" ">
                 <tr>

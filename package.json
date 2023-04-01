@@ -17,6 +17,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "react-hot-toast": "^2.4.0",
+    "request-ip": "^3.3.0",
     "zod": "^3.20.6",
     "zustand": "^4.3.7"
   },
@@ -27,6 +28,7 @@
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
+    "@types/request-ip": "^0.0.37",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "autoprefixer": "^10.4.7",
