@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { type NextPage } from "next";
+import { type InferGetServerSidePropsType, type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { type TryChar, useIPScanner } from "~/hooks/useIPScanner";
-import { useIPInfo } from "~/hooks/useIPInfo";
 import { download } from "~/helpers/download";
 import {
   TableCellsIcon,
@@ -15,9 +14,31 @@ import {
 } from "@heroicons/react/24/solid";
 import { copyIPToClipboard } from "~/helpers/copyIPToClipboard";
 import { allIps } from "~/consts";
+import type { GetServerSideProps } from "next";
+import requestIp from "request-ip";
+import { type IPInfo } from "~/types";
 import UserIP from "~/components/UserIP";
 
-const Home: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<{
+  ipInfo?: IPInfo;
+}> = async ({ req }) => {
+  const clientIp = requestIp.getClientIp(req);
+  if (!clientIp) {
+    return {
+      props: {},
+    };
+  }
+  const res = await fetch(`https://freeipapi.com/api/json/${clientIp}`);
+  const ipInfo = (await res.json()) as IPInfo;
+  return {
+    props: {
+      ipInfo,
+    },
+  };
+};
+const Home: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ ipInfo }) => {
   const {
     startScan,
     stopScan,
@@ -33,8 +54,6 @@ const Home: NextPage = () => {
     validIPs,
     setSettings,
   } = useIPScanner({ allIps });
-
-  const { ipInfo } = useIPInfo();
 
   const isRunning = scanState !== "idle";
 
@@ -116,14 +135,16 @@ const Home: NextPage = () => {
                 />
               </label>
             </div>
-            <UserIP
-              ip={ipInfo.ipAddress}
-              location={
-                ipInfo.ipVersion !== 0
-                  ? ipInfo.regionName + ", " + ipInfo.countryName
-                  : "..."
-              }
-            />
+            {ipInfo && (
+              <UserIP
+                ip={ipInfo.ipAddress}
+                location={
+                  ipInfo.ipVersion !== 0
+                    ? ipInfo.regionName + ", " + ipInfo.countryName
+                    : "..."
+                }
+              />
+            )}
             <div className="flex w-full flex-col items-center justify-around py-4 md:w-1/2 md:flex-row">
               {!isRunning ? (
                 <button
@@ -184,7 +205,7 @@ const Home: NextPage = () => {
               />
             </div>
           </section>
-          <section className="h-40 max-h-40 overflow-scroll">
+          <section className="h-40 max-h-40 overflow-y-scroll">
             <table className="w-full">
               <thead className=" ">
                 <tr>
