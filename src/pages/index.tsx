@@ -22,19 +22,26 @@ import UserIP from "~/components/UserIP";
 export const getServerSideProps: GetServerSideProps<{
   ipInfo?: IPInfo;
 }> = async ({ req }) => {
-  const clientIp = requestIp.getClientIp(req);
-  if (!clientIp) {
+  try {
+    const clientIp = requestIp.getClientIp(req);
+    console.info("Detected Client's IP", clientIp);
+    if (!clientIp) {
+      throw new Error("No client IP found");
+    }
+    const res = await fetch(`https://freeipapi.com/api/json/${clientIp}`);
+    const ipInfo = (await res.json()) as IPInfo;
+    console.info("IP info:", ipInfo);
+    return {
+      props: {
+        ipInfo,
+      },
+    };
+  } catch (e) {
+    console.error("Error while fetching IP info", e);
     return {
       props: {},
     };
   }
-  const res = await fetch(`https://freeipapi.com/api/json/${clientIp}`);
-  const ipInfo = (await res.json()) as IPInfo;
-  return {
-    props: {
-      ipInfo,
-    },
-  };
 };
 const Home: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
