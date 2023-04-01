@@ -117,11 +117,11 @@ const Home: NextPage = () => {
               </label>
             </div>
             <UserIP
-              ip={ipInfo?.IPv4 || ipInfo?.IPv6 || "0.0.0.0"}
+              ip={ipInfo.ipAddress}
               location={
-                ipInfo.city.length > 0 && ipInfo.country_name.length > 0
-                  ? ipInfo.city + ", " + ipInfo.country_name
-                  : "Loading..."
+                ipInfo.ipVersion !== 0
+                  ? ipInfo.regionName + ", " + ipInfo.countryName
+                  : "..."
               }
             />
             <div className="flex w-full flex-col items-center justify-around py-4 md:w-1/2 md:flex-row">

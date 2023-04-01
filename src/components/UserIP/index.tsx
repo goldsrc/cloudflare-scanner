@@ -8,7 +8,7 @@ const UserIP = ({ ip, location }: Props) => {
     <div className="text-center">
       <b>Your Current IP:</b>
       <p>{ip}</p>
-      <p className="opacity-75">({location})</p>
+      <p className="opacity-75">{location}</p>
     </div>
   );
 };

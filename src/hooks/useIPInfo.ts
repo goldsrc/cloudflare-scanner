@@ -2,40 +2,49 @@ import { useState, useEffect, useCallback } from "react";
 import axios, { type AxiosResponse } from "axios";
 
 type IPInfo = {
-  country_code: string;
-  country_name: string;
-  city: string;
-  postal: number;
+  ipVersion: number;
+  ipAddress: string;
   latitude: number;
   longitude: number;
-  IPv4?: string;
-  IPv6?: string;
-  state: string;
+  countryName: string;
+  countryCode: string;
+  timeZone: string;
+  zipCode: string;
+  cityName: string;
+  regionName: string;
 };
 
 const useIPInfo = () => {
   const [ipInfo, setIPInfo] = useState<IPInfo>({
-    country_code: "",
-    country_name: "",
-    city: "",
-    postal: 0,
+    ipVersion: 0,
+    ipAddress: "Loading...",
     latitude: 0,
     longitude: 0,
-    state: "",
+    countryName: "",
+    countryCode: "",
+    timeZone: "",
+    zipCode: "",
+    cityName: "",
+    regionName: "",
   });
 
   const getIPInfo = useCallback<() => Promise<AxiosResponse<IPInfo>>>(
-    () => axios.get("https://geolocation-db.com/json/"),
+    () => axios.get("https://freeipapi.com/api/json"),
     []
   );
 
   useEffect(() => {
     getIPInfo()
-      .then((data) => {
-        setIPInfo(data.data);
+      .then((response) => {
+        setIPInfo(response.data);
       })
       .catch(() => {
-        return;
+        setIPInfo((currentState) => {
+          return {
+            ...currentState,
+            ipAddress: "Failed to load IP info.",
+          };
+        });
       });
   }, [getIPInfo]);
 
