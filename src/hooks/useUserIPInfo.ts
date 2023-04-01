@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { fetchUserIPInfo } from "~/fetchers/userIP";
+import { fetchUserIPInfo } from "~/swr/fetchers/userIP";
 
 export const useUserIPInfo = () => {
   const swr = useSWR("ipInfo", () => fetchUserIPInfo(), {

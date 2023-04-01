@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { type NextPage } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Image from "next/image";
 import { type TryChar, useIPScanner } from "~/hooks/useIPScanner";
@@ -14,8 +15,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { copyIPToClipboard } from "~/helpers/copyIPToClipboard";
 import { allIps } from "~/consts";
-import UserIP from "~/components/UserIP";
 import { useUserIPInfo } from "~/hooks/useUserIPInfo";
+const UserIP = dynamic(() => import("~/components/UserIP"), { ssr: false });
 
 const Home: NextPage = () => {
   const { ipInfo } = useUserIPInfo();
@@ -115,14 +116,16 @@ const Home: NextPage = () => {
                 />
               </label>
             </div>
-            <UserIP
-              ip={ipInfo.ipAddress}
-              location={
-                ipInfo.ipVersion === 4
-                  ? ipInfo.regionName + ", " + ipInfo.countryName
-                  : "..."
-              }
-            />
+            <div className="h-16">
+              <UserIP
+                ip={ipInfo.ipAddress}
+                location={
+                  ipInfo.ipVersion === 4
+                    ? ipInfo.regionName + ", " + ipInfo.countryName
+                    : "..."
+                }
+              />
+            </div>
             <div className="flex w-full flex-col items-center justify-around py-4 md:w-1/2 md:flex-row">
               {!isRunning ? (
                 <button
