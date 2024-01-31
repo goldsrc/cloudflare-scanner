@@ -18,16 +18,9 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
-    }
+      "~/*": ["./src/*"],
+    },
   },
-  "include": [
-    ".eslintrc.cjs",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs"
-  ],
-  "exclude": ["node_modules"]
+  "include": [".eslintrc.cjs", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
 }
