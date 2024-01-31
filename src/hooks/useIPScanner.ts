@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { randomizeElements } from "~/helpers/randomizeElements";
-import pick from "lodash/pick";
 
 type ValidIP = {
   ip: string;
@@ -46,6 +45,11 @@ type FunctionalKeys = {
     ? K
     : never;
 }[keyof ScannerStore];
+
+function pick<T extends object, K extends keyof T>(base: T, ...keys: K[]) {
+  const entries = keys.map((key) => [key, base[key]]);
+  return Object.fromEntries(entries) as Pick<T, K>;
+}
 
 export const settingsInitialValues: Pick<ScannerStore, SettingKeys> = {
   maxIPCount: 5,
@@ -102,10 +106,16 @@ export const useScannerStore = create<ScannerStore>()(
     }),
     {
       name: "scanner-store",
-      partialize: (state) => pick(state, Object.keys(settingsInitialValues)),
+      partialize: (state) =>
+        pick(
+          state,
+          ...(Object.keys(
+            settingsInitialValues,
+          ) as unknown as (keyof typeof settingsInitialValues)[]),
+        ),
       version: 1,
-    }
-  )
+    },
+  ),
 );
 
 type IPScannerProps = {
@@ -177,7 +187,7 @@ export const useIPScanner = ({ allIps }: IPScannerProps) => {
           timeout = 1.2 * multiply * state.maxLatency;
           newState.color = "green";
           newState.currentLatency = Math.floor(
-            (performance.now() - startTime) / (i + 1)
+            (performance.now() - startTime) / (i + 1),
           );
         }
 
