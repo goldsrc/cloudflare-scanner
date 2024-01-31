@@ -13,30 +13,30 @@ You can find the latest deployment here: [https://cloudflare-scanner.vercel.app/
 ### Requirements
 
 - Node.js 18+
-- Yarn 1.22+
+- pnpm 8+
 
 ### Installation of dependencies
 
 ```bash
-yarn install
+pnpm install
 ```
 
 ### Running the app in development mode
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 ### Building the app for production
 
 ```bash
-yarn build
+pnpm build
 ```
 
 ### Running the app in production mode
 
 ```bash
-yarn start
+pnpm start
 ```
 
 ## License
