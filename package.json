@@ -10,28 +10,28 @@
     "download": "node ./src/download.mjs"
   },
   "dependencies": {
-    "@heroicons/react": "^2.1.1",
-    "next": "^14.1.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "@heroicons/react": "^2.1.4",
+    "next": "^14.2.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-hot-toast": "^2.4.1",
-    "swr": "^2.2.4",
-    "zustand": "^4.5.0"
+    "swr": "^2.2.5",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
-    "@types/eslint": "^8.56.2",
-    "@types/node": "^20.11.13",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
-    "@typescript-eslint/eslint-plugin": "^6.20.0",
-    "@typescript-eslint/parser": "^6.20.0",
-    "autoprefixer": "^10.4.17",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "^14.1.0",
-    "postcss": "^8.4.33",
-    "prettier": "^3.2.4",
-    "prettier-plugin-tailwindcss": "^0.5.11",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.14.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.5.0",
+    "eslint-config-next": "^14.2.4",
+    "postcss": "^8.4.38",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.2"
   }
 }
